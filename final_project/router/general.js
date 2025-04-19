@@ -63,4 +63,47 @@ public_users.get('/review/:isbn',function (req, res) {
   //return res.status(300).json({message: "Yet to be implemented"});
 });
 
+let url="http://localhost:3000/";
+const getBookDetails=async(url)=>{
+      let resp = await axios.get(url);
+      let books = resp.data;
+      books.map((book)=>{
+        console.log(book[isbn]);
+        console.log(book[isbn].author);
+        console.log(book[isbn].title);
+        console.log(book[isbn].reviews);
+      });
+}
+
+url="http://localhost:3000/isbn/";
+const getBookDetailsByISBN=async(url,isbn)=>{
+      let resp = await axios.get(url+isbn);
+      let book = resp.data;
+      console.log(book[isbn]);
+}
+
+url="http://localhost:3000/author/";
+const getBookDetailsByAuthor=async(url,author)=>{
+      let resp = await axios.get(url+author);
+      let books = resp.data;
+      books.map((book)=>{
+        console.log(book[isbn]);
+        console.log(book[isbn].author);
+        console.log(book[isbn].title);
+        console.log(book[isbn].reviews);
+      });
+}
+
+url="http://localhost:3000/title/";
+const getBookDetailsByTitle=async(url,title)=>{
+      let resp = await axios.get(url+title);
+      let books = resp.data;  
+      books.map((book)=>{
+        console.log(book[isbn]);
+        console.log(book[isbn].author);
+        console.log(book[isbn].title);
+        console.log(book[isbn].reviews);
+      });
+}
+
 module.exports.general = public_users;
