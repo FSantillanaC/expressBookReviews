@@ -63,47 +63,56 @@ public_users.get('/review/:isbn',function (req, res) {
   //return res.status(300).json({message: "Yet to be implemented"});
 });
 
-let url="http://localhost:3000/";
-const getBookDetails=async(url)=>{
-      let resp = await axios.get(url);
-      let books = resp.data;
-      books.map((book)=>{
-        console.log(book[isbn]);
-        console.log(book[isbn].author);
-        console.log(book[isbn].title);
-        console.log(book[isbn].reviews);
-      });
-}
-
-url="http://localhost:3000/isbn/";
-const getBookDetailsByISBN=async(url,isbn)=>{
-      let resp = await axios.get(url+isbn);
-      let book = resp.data;
-      console.log(book[isbn]);
-}
-
-url="http://localhost:3000/author/";
-const getBookDetailsByAuthor=async(url,author)=>{
-      let resp = await axios.get(url+author);
-      let books = resp.data;
-      books.map((book)=>{
-        console.log(book[isbn]);
-        console.log(book[isbn].author);
-        console.log(book[isbn].title);
-        console.log(book[isbn].reviews);
-      });
-}
-
-url="http://localhost:3000/title/";
-const getBookDetailsByTitle=async(url,title)=>{
-      let resp = await axios.get(url+title);
-      let books = resp.data;  
-      books.map((book)=>{
-        console.log(book[isbn]);
-        console.log(book[isbn].author);
-        console.log(book[isbn].title);
-        console.log(book[isbn].reviews);
-      });
-}
+// Get the book list available in the shop
+public_users.get('/', async function (req, res) {
+  
+    const outcome = new Promise((resolve,reject) => {
+      setTimeout(() => {
+        resolve(books)
+      },time_to_wait)});
+  
+    let book_list = JSON.stringify(await outcome, null, 4);
+  
+    res.send(book_list);
+  });
+  
+  // Get book details based on ISBN
+  public_users.get('/isbn/:isbn', async function (req, res) {
+    
+      const isbn = req.params.isbn;
+      const outcome = new Promise((resolve,reject) => {
+        setTimeout(() => {
+          resolve(books)
+        },time_to_wait)});
+  
+      let filtered_books = Object.values(await outcome).filter((book) => book.isbn === isbn);
+      res.send(JSON.stringify(filtered_books[0], null, 4));
+   });
+    
+  // Get book details based on author
+  public_users.get('/author/:author', async function (req, res) {
+   
+    const author = req.params.author;
+    const outcome = new Promise((resolve,reject) => {
+      setTimeout(() => {
+        resolve(books)
+      },time_to_wait)});
+  
+    let filtered_books = Object.values(await outcome).filter((book) => book.author === author);
+    res.send(JSON.stringify(filtered_books[0], null, 4));
+  });
+  
+  // Get all books based on title
+  public_users.get('/title/:title', async function (req, res) {
+  
+    const title = req.params.title;
+    const outcome = new Promise((resolve,reject) => {
+      setTimeout(() => {
+        resolve(books)
+      },time_to_wait)});
+  
+    let filtered_books = Object.values(await outcome).filter((book) => book.title === title);
+    res.send(JSON.stringify(filtered_books[0], null, 4));
+  });
 
 module.exports.general = public_users;
